@@ -263,6 +263,9 @@
        <height>21</height>
       </rect>
      </property>
+     <property name="placeholderText">
+      <string>1</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="x2_pow">
      <property name="geometry">
@@ -273,6 +276,9 @@
        <height>21</height>
       </rect>
      </property>
+     <property name="placeholderText">
+      <string>1</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="x3_pow">
      <property name="geometry">
@@ -282,6 +288,9 @@
        <width>31</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="placeholderText">
+      <string>1</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="grid_search">
@@ -436,6 +445,9 @@
        <height>20</height>
       </rect>
      </property>
+    <property name="placeholderText">
+      <string>2</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="input_x2_size">
      <property name="geometry">
@@ -446,6 +458,9 @@
        <height>20</height>
       </rect>
      </property>
+    <property name="placeholderText">
+      <string>2</string>
+    </property>
     </widget>
     <widget class="QLineEdit" name="input_x3_size">
      <property name="geometry">
@@ -456,6 +471,9 @@
        <height>20</height>
       </rect>
      </property>
+    <property name="placeholderText">
+      <string>3</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="input_y_size">
      <property name="geometry">
@@ -465,6 +483,9 @@
        <width>31</width>
        <height>20</height>
       </rect>
+     </property>
+    <property name="placeholderText">
+      <string>4</string>
      </property>
     </widget>
     <widget class="QFrame" name="frame">

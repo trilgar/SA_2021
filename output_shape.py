@@ -159,7 +159,7 @@ class Output(object):
         std_coeffs = np.zeros(coeffs.shape)
         for index in range(coeffs.shape[0]):
             cp = self.basis[index].coef.copy()
-            cp.resize(coeffs.shape)
+            cp.resize(coeffs.shape, refcheck = False)
             std_coeffs += coeffs[index] * cp
         return std_coeffs
    

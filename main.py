@@ -38,27 +38,26 @@ class App(QMainWindow):
     
     def compute(self):
         # read configuration data
-        dim_x1 = int(self.ui.input_x1_size.text())
-        dim_x2 = int(self.ui.input_x2_size.text())
-        dim_x3 = int(self.ui.input_x3_size.text())
-        dim_y = int(self.ui.input_y_size.text())
-        sample_range = int(self.ui.sample_size.text())
+        dim_x1 = int(self.ui.input_x1_size.text()) if self.ui.input_x1_size.text() != '' else 2 
+        dim_x2 = int(self.ui.input_x2_size.text()) if self.ui.input_x2_size.text() != '' else 2 
+        dim_x3 = int(self.ui.input_x3_size.text()) if self.ui.input_x3_size.text() != '' else 3 
+        dim_y = int(self.ui.input_y_size.text()) if self.ui.input_y_size.text() != '' else 4
+        sample_range = int(self.ui.sample_size.text()) if self.ui.sample_size.text()!= '' else 40
 
-        input_file_name = self.ui.input_file.text()
-        pol_pow_x1 = 0
-        pol_pow_x2 = 0
-        pol_pow_x3 = 0
+        input_file_name = self.ui.input_file.text() if self.ui.input_file.text() != '' else 't_input.txt'
+        self.output_file = self.ui.output_file.text() if self.ui.output_file.text()!='' else 'output.txt'
 
         grid_search = self.ui.grid_search.isChecked()
         if grid_search == False:
-            pol_pow_x1 = int(self.ui.x1_pow.text())
-            pol_pow_x2 = int(self.ui.x2_pow.text())
-            pol_pow_x3 = int(self.ui.x3_pow.text())
+            pol_pow_x1 = int(self.ui.x1_pow.text()) if self.ui.x1_pow.text() != '' else 1
+            pol_pow_x2 = int(self.ui.x2_pow.text()) if self.ui.x2_pow.text() != '' else 1
+            pol_pow_x3 = int(self.ui.x3_pow.text()) if self.ui.x3_pow.text() != '' else 1
         #grid_search = self.ui.grid_search.isChecked()
             
             
-
+        bq0AsAvg = True
         bq0AsAvg = self.ui.max_min.isChecked()
+        lambda_separate = True
         lambda_separate = self.ui.lambda_sep.isChecked()
 
         if self.ui.cheb.isChecked():
@@ -69,6 +68,8 @@ class App(QMainWindow):
             polynom_type = "Ermit_value_in_point"
         elif self.ui.lejandr.isChecked():
             polynom_type = "Lejan_value_in_point"
+        else:
+            polynom_type = "cheb_value_in_point"
 
         # Fills dropping list of Yi for plotting
         self.ui.var_choice.clear()
@@ -121,7 +122,7 @@ class App(QMainWindow):
         result_string = output.form_result_string()
         #self.ui.output.setText(result_string)
         
-        with open(self.ui.output_file.text(), "w") as out_file:
+        with open(self.output_file, "w") as out_file:
             out_file.write(result_string)
         local_path = "D:/SA_OOO/output.txt"
         os.startfile(local_path)
