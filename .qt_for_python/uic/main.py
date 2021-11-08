@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\desktop\SA_OOO\main.ui'
+# Form implementation generated from reading ui file 'd:\SA_OOO\main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -201,13 +201,16 @@ class Ui_MainWindow(object):
         self.input_file_button.setText(_translate("MainWindow", "Імпортувати"))
         self.output_file_button.setText(_translate("MainWindow", "Вибрати"))
         self.sample_size.setPlaceholderText(_translate("MainWindow", "40"))
-        self.input_file.setPlaceholderText(_translate("MainWindow", "input.txt"))
+        self.input_file.setPlaceholderText(_translate("MainWindow", "t_input.txt"))
         self.output_file.setPlaceholderText(_translate("MainWindow", "output.txt"))
         self.label_5.setText(_translate("MainWindow", "Налаштування моделі"))
         self.label_6.setText(_translate("MainWindow", "Степені полінома"))
         self.label_7.setText(_translate("MainWindow", "X1"))
         self.label_8.setText(_translate("MainWindow", "X2"))
         self.label_9.setText(_translate("MainWindow", "X3"))
+        self.x1_pow.setPlaceholderText(_translate("MainWindow", "1"))
+        self.x2_pow.setPlaceholderText(_translate("MainWindow", "1"))
+        self.x3_pow.setPlaceholderText(_translate("MainWindow", "1"))
         self.grid_search.setText(_translate("MainWindow", "     Підібрати найкращий"))
         self.label_10.setText(_translate("MainWindow", "Тип полінома"))
         self.cheb.setText(_translate("MainWindow", " Чебишева"))
@@ -219,6 +222,10 @@ class Ui_MainWindow(object):
         self.label_13.setText(_translate("MainWindow", "X2"))
         self.label_14.setText(_translate("MainWindow", "X3"))
         self.label_15.setText(_translate("MainWindow", "Y"))
+        self.input_x1_size.setPlaceholderText(_translate("MainWindow", "2"))
+        self.input_x2_size.setPlaceholderText(_translate("MainWindow", "2"))
+        self.input_x3_size.setPlaceholderText(_translate("MainWindow", "3"))
+        self.input_y_size.setPlaceholderText(_translate("MainWindow", "4"))
         self.label_16.setText(_translate("MainWindow", "Лямбда :"))
         self.lambda_sep.setText(_translate("MainWindow", "Окремо"))
         self.lambda_tog.setText(_translate("MainWindow", "Разом"))

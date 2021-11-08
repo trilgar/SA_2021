@@ -154,7 +154,7 @@
       </rect>
      </property>
      <property name="placeholderText">
-      <string>input.txt</string>
+      <string>t_input.txt</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="output_file">
