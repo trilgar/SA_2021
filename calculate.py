@@ -224,13 +224,7 @@ def calculate_polynom_values_for_all(x1, x2, x3, pow_x1, pow_x2, pow_x3, pol_typ
 
 
 def solve_system_of_equations(A, bq0, accuracy):
-    # solves equation A*X = b;
-    # return X;
-    # A should be symmetric and positive definite matrix.
-    # That's the equation is multiplied on transposition of A.
-    # 'coefficient' regularizes the length of step from current solution
-    # to minimize the residual vector
-    def gradient_descent(A, b, eps):
+    def solve(A, b, eps):
         A_new = dot(array(A).transpose(), array(A))
         b_new = dot(array(A).transpose(), b)
         x = zeros(b_new.size)
@@ -256,7 +250,7 @@ def solve_system_of_equations(A, bq0, accuracy):
     Lambda = []
 
     for b in bq0:
-        result = gradient_descent(array(A), array(b), accuracy)
+        result = solve(array(A), array(b), accuracy)
         Lambda.append(list(result))
 
     return Lambda
