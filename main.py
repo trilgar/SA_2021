@@ -48,7 +48,7 @@ class App(QMainWindow):
         self.output_file = self.ui.output_file.text() if self.ui.output_file.text()!='' else 'output.txt'
 
         grid_search = self.ui.grid_search.isChecked()
-        if grid_search == False:
+        if not grid_search:
             pol_pow_x1 = int(self.ui.x1_pow.text()) if self.ui.x1_pow.text() != '' else 1
             pol_pow_x2 = int(self.ui.x2_pow.text()) if self.ui.x2_pow.text() != '' else 1
             pol_pow_x3 = int(self.ui.x3_pow.text()) if self.ui.x3_pow.text() != '' else 1
