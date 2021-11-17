@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\SA_OOO\main.ui'
+# Form implementation generated from reading ui file 'c:\Users\ALEX\PycharmProjects\SA_2021\main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -201,7 +201,7 @@ class Ui_MainWindow(object):
         self.input_file_button.setText(_translate("MainWindow", "Імпортувати"))
         self.output_file_button.setText(_translate("MainWindow", "Вибрати"))
         self.sample_size.setPlaceholderText(_translate("MainWindow", "40"))
-        self.input_file.setPlaceholderText(_translate("MainWindow", "t_input1.txt"))
+        self.input_file.setPlaceholderText(_translate("MainWindow", "lab3.txt"))
         self.output_file.setPlaceholderText(_translate("MainWindow", "output.txt"))
         self.label_5.setText(_translate("MainWindow", "Налаштування моделі"))
         self.label_6.setText(_translate("MainWindow", "Степені полінома"))

@@ -89,9 +89,9 @@ class App(QMainWindow):
         
         if grid_search:
             all_pos_pow = []
-            for pow_x1 in range(0,10):
-                for pow_x2 in range(0,10):
-                    for pow_x3 in range(0,10):
+            for pow_x1 in range(0,5):
+                for pow_x2 in range(0,5):
+                    for pow_x3 in range(0,5):
                         all_pos_pow.append((pow_x1,pow_x2,pow_x3))
             resids = []
             args = []
