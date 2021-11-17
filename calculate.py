@@ -1,19 +1,7 @@
 import polinoms
-from numpy import (add, array, dot, eye, linalg, subtract, zeros, random)
-
-"""
-X1 is matrix [q0 x n1]
-X2 is matrix [q0 x n2]
-X3 is matrix [q0 x n3]
-Y is matrix [q0 x m]
-q0 = 45;
-n1 = 2;
-n2 = 2;
-n3 = 3;
-m = 4;
-"""
-
-
+from numpy import (add, array, dot, eye, linalg, subtract, zeros, random, log, exp)
+import warnings
+warnings.filterwarnings("ignore")
 class Calculator(object):
     def __init__(self, data, polynom_type, pol_pow_x1, pol_pow_x2, pol_pow_x3,
                  b_as_average, solve_system_separately):
@@ -135,9 +123,6 @@ class Calculator(object):
                     [list(map(list, zip(*data.data_y)))[i]],
                     accuracy)
                 )[0])
-            
-            #if (b_as_average) :
-            #    break
 
         self.Y_approx = []
         self.Y_real = []
@@ -175,8 +160,7 @@ class Calculator(object):
     def form_Y_i_approx_(self, i):
         Y_approx = []
         for j in range(len(self.phi[i])):
-            Y_approx.append(sum(self.c[i][k] * self.phi[i][j][k] for k in
-                                range(len(self.c[i]))))
+            Y_approx.append(exp(sum(self.c[i][k] * log(self.phi[i][j][k] + 1) for k in range(len(self.c[i])))) - 1)
 
         return Y_approx
 
@@ -190,7 +174,7 @@ def calculate_polynom_values_for_x(x1, pow_x1, pol_type):
         for x_i in x:
             row_polinom = []
             for j in range(0, pow_x1 + 1):
-                row_polinom.append(getattr(pol_class, pol_type)(j, x_i))
+                row_polinom.append(log(getattr(pol_class, pol_type)(j, x_i) + 1))
             row_A += row_polinom
         A.append(row_A)
     return A
@@ -206,17 +190,17 @@ def calculate_polynom_values_for_all(x1, x2, x3, pow_x1, pow_x2, pow_x3, pol_typ
         for x_i in x_1:
             row_polinom = []
             for j in range(0, pow_x1 + 1):
-                row_polinom.append(getattr(pol_class, pol_type)(j, x_i))
+                row_polinom.append(log(getattr(pol_class, pol_type)(j, x_i) + 1))
             row_A += row_polinom
         for x_i in x_2:
             row_polinom = []
             for j in range(0, pow_x2 + 1):
-                row_polinom.append(getattr(pol_class, pol_type)(j, x_i))
+                row_polinom.append(log(getattr(pol_class, pol_type)(j, x_i) + 1))
             row_A += row_polinom
         for x_i in x_3:
             row_polinom = []
             for j in range(0, pow_x3 + 1):
-                row_polinom.append(getattr(pol_class, pol_type)(j, x_i))
+                row_polinom.append(log(getattr(pol_class, pol_type)(j, x_i) + 1))
             row_A += row_polinom
         A.append(row_A)
 
@@ -225,7 +209,7 @@ def calculate_polynom_values_for_all(x1, x2, x3, pow_x1, pow_x2, pow_x3, pol_typ
 
 def solve_system_of_equations(A, bq0, accuracy):
     def stat_grad_vector(A_new, b_new, x):
-        h = 0.01;
+        h = 0.01
         ksi  = random.uniform(0, 2, size = (6,len(x))) - 1
         ksi = map(lambda k: k/linalg.norm(k), ksi)
         delta_grad = zeros(len(x))
@@ -237,32 +221,33 @@ def solve_system_of_equations(A, bq0, accuracy):
             delta_grad += delta * k
         return delta_grad / linalg.norm(delta_grad)
         
-    def solve(A, b, eps):
-        A_new = dot(array(A).transpose(), array(A))
-        b_new = dot(array(A).transpose(), b)
-        x = zeros(b_new.size)
+    def solve(A, b, eps, method):
+        A_new = array(A)
+        b_new = log(b + 1)
+        x = zeros(A_new.shape[1])
         i = 0
-        imax = 10000
+        imax = 1
         r = subtract(dot(A_new, x), b_new)
         best_x = x
         best_norm = linalg.norm(r)
         delta = dot(r.T, r)
         delta0 = delta
         while i < imax and delta > eps ** 2 * delta0:
-            alpha = float(delta / dot(r.T, dot(A_new, r)))
-            x -= alpha * r
+            aar = A_new @ A_new.T @ r
+            alpha = float(dot(r, aar) / linalg.norm(aar)**2)
+            x -= alpha * A_new.T @ r
             r = subtract(dot(A_new, x), b_new)
             norm = linalg.norm(r)
-            if best_norm > norm :
+            if best_norm > norm:
                 best_norm = norm
                 best_x = x
             delta = dot(r.T, r)
             i += 1
-        return best_x
+        return linalg.lstsq(A_new, b_new, rcond=-1)[0]
     Lambda = []
 
     for b in bq0:
-        result = solve(array(A), array(b), accuracy)
+        result = solve(array(A), array(b), accuracy, stat_grad_vector)
         Lambda.append(list(result))
 
     return Lambda
@@ -277,8 +262,8 @@ def calculate_psi(x, pol_pow, poly_type, lambdas, lambda_index):
             psi_temp = 0.
             for p in range(0, pol_pow + 1):
                 psi_temp += lambdas[lambda_index + p] \
-                            * getattr(pol_class, poly_type)(p, x_i)
-            PSI_x_row.append(psi_temp)
+                            * log(getattr(pol_class, poly_type)(p, x_i) + 1)
+            PSI_x_row.append(exp(psi_temp) - 1)
         PSI_x.append(PSI_x_row)
     return PSI_x
 
@@ -293,7 +278,7 @@ def smooth(Y_approx, Y_real, deviation):
             Y_approx[i] = Y_real[i] / 2
             continue
         if abs(Y_approx[i] - Y_real[i]) > deviation:
-            if Y_approx[i] > Y_real[i]:#357BCC
+            if Y_approx[i] > Y_real[i]:
                 Y_approx[i] = Y_real[i] + deviation
             else:
                 Y_approx[i] = Y_real[i] - deviation
@@ -319,15 +304,15 @@ def calculate_phi(data_, psi_for_x1, psi_for_x2, psi_for_x3, a_):
         row_PHI = []
         phi_func = 0
         for j_1 in range(0, dim_x1):
-            phi_func += a_[j_1] * psi_for_x1[i_1][j_1]
-        row_PHI.append(phi_func)
+            phi_func += a_[j_1] * log(psi_for_x1[i_1][j_1] + 1)
+        row_PHI.append(exp(phi_func) - 1)
         phi_func = 0
         for j_1 in range(0, dim_x2):
-            phi_func += a_[dim_x1 + j_1] * psi_for_x2[i_1][j_1]
-        row_PHI.append(phi_func)
+            phi_func += a_[dim_x1 + j_1] * log(psi_for_x2[i_1][j_1] + 1)
+        row_PHI.append(exp(phi_func) - 1)
         phi_func = 0
         for j_1 in range(0, dim_x3):
-            phi_func += a_[dim_x1 + dim_x2 + j_1] * psi_for_x3[i_1][j_1]
-        row_PHI.append(phi_func)
+            phi_func += a_[dim_x1 + dim_x2 + j_1] * log(psi_for_x3[i_1][j_1] + 1)
+        row_PHI.append(exp(phi_func) - 1)
         PHI_.append(row_PHI)
     return PHI_

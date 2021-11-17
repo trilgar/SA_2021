@@ -201,7 +201,7 @@ class Ui_MainWindow(object):
         self.input_file_button.setText(_translate("MainWindow", "Імпортувати"))
         self.output_file_button.setText(_translate("MainWindow", "Вибрати"))
         self.sample_size.setPlaceholderText(_translate("MainWindow", "40"))
-        self.input_file.setPlaceholderText(_translate("MainWindow", "t_input.txt"))
+        self.input_file.setPlaceholderText(_translate("MainWindow", "t_input1.txt"))
         self.output_file.setPlaceholderText(_translate("MainWindow", "output.txt"))
         self.label_5.setText(_translate("MainWindow", "Налаштування моделі"))
         self.label_6.setText(_translate("MainWindow", "Степені полінома"))

@@ -6,8 +6,6 @@ import numpy as np
 matplotlib.use('Qt5Agg')
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from matplotlib import pyplot as plt
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import *
 from PyQt5.uic import loadUi
 from calculate import Calculator
 from output_shape import Output
@@ -44,7 +42,7 @@ class App(QMainWindow):
         dim_y = int(self.ui.input_y_size.text()) if self.ui.input_y_size.text() != '' else 4
         sample_range = int(self.ui.sample_size.text()) if self.ui.sample_size.text()!= '' else 40
 
-        input_file_name = self.ui.input_file.text() if self.ui.input_file.text() != '' else 't_input.txt'
+        input_file_name = self.ui.input_file.text() if self.ui.input_file.text() != '' else 'lab3.txt'
         self.output_file = self.ui.output_file.text() if self.ui.output_file.text()!='' else 'output.txt'
 
         grid_search = self.ui.grid_search.isChecked()
@@ -124,7 +122,7 @@ class App(QMainWindow):
         
         with open(self.output_file, "w") as out_file:
             out_file.write(result_string)
-        local_path = "D:/SA_OOO/output.txt"
+        local_path = "output.txt"
         os.startfile(local_path)
             
 

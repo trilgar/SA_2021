@@ -27,7 +27,6 @@ class DataLoader:
         for i in range(0, selection_range):
             line = f.readline()
             if line == "":
-                # Is not it just ok?
                 print("Your input file have empty line")
                 self.ERROR = True
                 return 0
