@@ -224,16 +224,17 @@ def calculate_polynom_values_for_all(x1, x2, x3, pow_x1, pow_x2, pow_x3, pol_typ
 
 
 def solve_system_of_equations(A, bq0, accuracy):
-    def stat_grad_vector(A_new, b_new, x):
-        h = 0.01;
-        ksi  = random.uniform(0, 2, size = (6,len(x))) - 1
-        ksi = map(lambda k: k/linalg.norm(k), ksi)
+    def stat_grad_vector(A_new, b_new, x, step):
+        h = 0.01
+        ksi = random.uniform(0, 2, size=(6, len(x))) - 1
+        ksi = map(lambda k: k / linalg.norm(k), ksi)
         delta_grad = zeros(len(x))
         r = subtract(dot(A_new, x), b_new)
         for k in ksi:
             k = array(k)
-            delta = dot(A_new, x - h * k) - dot(A_new, x)
-            delta = linalg.norm(delta)**2
+            delta = dot(A_new, x - h * k) - dot(A_new, x) + step * (
+                        1 / linalg.norm(dot(A_new, x - h * k) - bq0) + 1 / linalg.norm(dot(A_new, x) - b))
+            delta = linalg.norm(delta) ** 2
             delta_grad += delta * k
         return delta_grad / linalg.norm(delta_grad)
         
